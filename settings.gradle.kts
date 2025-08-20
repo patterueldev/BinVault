@@ -31,3 +31,6 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":server")
 include(":shared")
+include(":packages:core")
+include(":packages:core:ui")
+include(":packages:features:AppListFeature")
