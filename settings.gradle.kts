@@ -28,7 +28,10 @@ dependencyResolutionManagement {
     }
 }
 
-include(":composeApp")
+include(":apps:webapp")
+include(":apps:webapp-starter")
+include(":apps:webapp-aggregator")
+//include(":composeApp")
 include(":server")
 include(":shared")
 include(":packages:core")

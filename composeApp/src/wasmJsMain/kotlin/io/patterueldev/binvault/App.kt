@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.patterueldev.binvault.core.ui.BaseContentView
+import io.patterueldev.feature.applist.scenes.list.AppListNavigationCoordinator
 
 import io.patterueldev.feature.applist.scenes.list.AppListView
 import io.patterueldev.feature.applist.scenes.list.DefaultAppListViewModel
@@ -27,4 +28,10 @@ fun App(
     }
 }
 
+class DefaultAppListNavigationCoordinator(
 
+): AppListNavigationCoordinator {
+    override fun createNewApp() {
+        TODO("Not yet implemented")
+    }
+}

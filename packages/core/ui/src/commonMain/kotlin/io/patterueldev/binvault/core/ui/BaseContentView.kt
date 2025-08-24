@@ -14,3 +14,4 @@ fun BaseContentView(content: @Composable () -> Unit) {
         }
     }
 }
+

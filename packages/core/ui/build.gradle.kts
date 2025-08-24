@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-
     alias(libs.plugins.androidLibrary)
 }
 
@@ -45,7 +44,10 @@ kotlin {
             api(compose.components.resources)
             api(compose.components.uiToolingPreview)
 
-            projects.packages.core
+            api(libs.androidx.navigation.compose)
+            api(libs.koin.compose.viewmodel)
+
+            api(projects.packages.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

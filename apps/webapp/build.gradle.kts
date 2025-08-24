@@ -1,30 +1,22 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-
-    alias(libs.plugins.androidLibrary)
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
+        outputModuleName.set("webapp")
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
+                outputFileName = "webapp.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
@@ -34,32 +26,19 @@ kotlin {
                 }
             }
         }
+        binaries.executable()
     }
 
     sourceSets {
         commonMain.dependencies {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
-            api(projects.packages.core.ui)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
+            
+            implementation(projects.apps.webappStarter)
+            implementation(projects.apps.webappAggregator)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
 }
-
-android {
-    namespace = "io.patterueldev.binvault.feature.applist"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-}
-
-dependencies {
-    debugImplementation(compose.uiTooling)
-}
-
