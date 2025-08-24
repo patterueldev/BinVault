@@ -5,17 +5,23 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-open class Coordinator(val navController: NavHostController): KoinComponent {
+open class Coordinator(
+    private val navHostControllerProvider: @Composable () -> NavHostController = { rememberNavController() }
+): KoinComponent {
     private val appListUIProvider: AppListUIProvider by inject()
+    private lateinit var navHostController: NavHostController
 
     @Suppress("ComposableNaming")
     @Composable
     open fun start() {
-        NavHost(navController = navController, startDestination = "HOME") {
-            composable("HOME") {
+        println("Coordinator started")
+        navHostController = navHostControllerProvider()
+        NavHost(navController = navHostController, startDestination = "/") {
+            composable("/") {
                 appListUIProvider.AppListUI()
             }
         }
@@ -23,7 +29,9 @@ open class Coordinator(val navController: NavHostController): KoinComponent {
     open fun routeToCreateNewApp() {}
 }
 
-interface AppListUIProvider {
+abstract class AppListUIProvider {
     @Composable
-    fun AppListUI()
+    open fun AppListUI() {
+        Text("Default AppListUI - Override this in your module")
+    }
 }

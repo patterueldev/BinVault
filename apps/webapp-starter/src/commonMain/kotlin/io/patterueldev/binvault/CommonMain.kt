@@ -2,6 +2,7 @@ package io.patterueldev.binvault
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
+import dev.whyoleg.sweetspi.ServiceLoader
 import io.patterueldev.binvault.core.ui.BaseContentView
 import io.patterueldev.binvault.core.ui.Coordinator
 import io.patterueldev.core.ModuleProvider
@@ -12,11 +13,16 @@ class CommonMain(
     val body: (@Composable () -> Unit) -> Unit
 ) {
     fun mainApp() {
-        startKoin {
-            ModuleProvider.instance.module()
-        }
-        body {
-            App(coordinator = Coordinator(navController = rememberNavController()))
+        ServiceLoader.load<ModuleProvider>().forEach { provider ->
+            startKoin {
+                modules(
+                    provider.module()
+                )
+            }
+            body {
+                App(coordinator = Coordinator())
+            }
+            return@forEach
         }
     }
 }

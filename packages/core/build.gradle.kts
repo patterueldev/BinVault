@@ -1,12 +1,16 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import dev.whyoleg.sweetspi.gradle.*
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.sweetspi)
 }
 
 kotlin {
+    withSweetSpi()
+
     jvm()
 
     @OptIn(ExperimentalWasmDsl::class)

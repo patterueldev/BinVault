@@ -5,12 +5,11 @@ import io.patterueldev.binvault.core.ui.AppListUIProvider
 import io.patterueldev.feature.applist.scenes.list.AppListView
 import io.patterueldev.feature.applist.scenes.list.AppListViewModel
 import io.patterueldev.feature.applist.views.AppItem
-import org.koin.core.annotation.Module
 
-@Module
 class AppListModule: AppListUIProvider() {
     @Composable
     override fun AppListUI() {
+        println("AppListUI Composable called")
         AppListView(
             viewModel = object : AppListViewModel() {
                 override fun loadApps() {

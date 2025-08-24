@@ -1,5 +1,6 @@
 package io.patterueldev.binvault
 
+import androidx.compose.material3.Text
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import androidx.navigation.compose.rememberNavController
@@ -11,6 +12,7 @@ import org.koin.dsl.module
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+    println("Starting BinVault WebApp...")
     CommonMain { body ->
         ComposeViewport(document.body!!) {
             body()
