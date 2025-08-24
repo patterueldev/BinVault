@@ -6,8 +6,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.whyoleg.sweetspi.ServiceProvider
+import io.patterueldev.core.ModuleProvider
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 
 open class Coordinator(
     private val navHostControllerProvider: @Composable () -> NavHostController = { rememberNavController() }
@@ -29,9 +34,16 @@ open class Coordinator(
     open fun routeToCreateNewApp() {}
 }
 
-abstract class AppListUIProvider {
+open class AppListUIProvider {
     @Composable
     open fun AppListUI() {
         Text("Default AppListUI - Override this in your module")
+    }
+}
+
+@ServiceProvider
+object DefaultModuleProvider : ModuleProvider {
+    override fun module(): Module = org.koin.dsl.module {
+        singleOf(::AppListUIProvider) bind AppListUIProvider::class
     }
 }

@@ -9,6 +9,8 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
+// TODO: We don't need this if we plan to just provide the modules from the implementations.
+// aggregator just loads the necessary dependencies from gradle, then ServiceLoader loads the modules automatically.
 @ServiceProvider
 object ModuleProviderImpl: ModuleProvider {
     override fun module(): Module {

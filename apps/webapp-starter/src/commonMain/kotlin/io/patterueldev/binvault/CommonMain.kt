@@ -13,7 +13,7 @@ class CommonMain(
     val body: (@Composable () -> Unit) -> Unit
 ) {
     fun mainApp() {
-        ServiceLoader.load<ModuleProvider>().forEach { provider ->
+        ServiceLoader.load<ModuleProvider>().last().let { provider ->
             startKoin {
                 modules(
                     provider.module()
@@ -22,7 +22,6 @@ class CommonMain(
             body {
                 App(coordinator = Coordinator())
             }
-            return@forEach
         }
     }
 }
