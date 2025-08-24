@@ -13,7 +13,9 @@ class CommonMain(
     val body: (@Composable () -> Unit) -> Unit
 ) {
     fun mainApp() {
-        ServiceLoader.load<ModuleProvider>().last().let { provider ->
+        val providers = ServiceLoader.load<ModuleProvider>()
+        println("Loaded providers: ${providers.count()}")
+        providers.last().let { provider ->
             startKoin {
                 modules(
                     provider.module()
